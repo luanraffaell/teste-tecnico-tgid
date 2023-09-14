@@ -1,6 +1,16 @@
 package com.tgid.dtos;
 
-import java.math.BigDecimal;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Data;
 
-public record TransacaoRequestDTO(Long clienteId, Long empresaId, BigDecimal valorTransacao) {
+import java.math.BigDecimal;
+@Data
+public class TransacaoRequestDTO {
+    @NotNull
+    private Long clienteId;
+    @NotNull
+    private Long empresaId;
+    @Positive
+    private BigDecimal valorTransacao;
 }
