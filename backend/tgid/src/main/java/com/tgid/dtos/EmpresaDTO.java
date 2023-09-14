@@ -1,9 +1,11 @@
 package com.tgid.dtos;
 
 import com.tgid.domain.users.Empresa;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
+@Data
 public class EmpresaDTO {
     private Long id;
     private String nome;
