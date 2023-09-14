@@ -26,6 +26,7 @@ public class Transacao {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
     private BigDecimal valorTaxa;
+    private BigDecimal valorTransacao;
 
     @Enumerated(EnumType.STRING)
     private TransactionType tipoTransacao;
