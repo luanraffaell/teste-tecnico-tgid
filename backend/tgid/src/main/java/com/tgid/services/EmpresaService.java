@@ -21,15 +21,22 @@ public class EmpresaService {
     public Empresa salvarEmpresa(Empresa empresa){
         return this.empresaRepository.save(empresa);
     }
-    @Transactional
+
+    public EmpresaDTO buscarEmpresaDTOPorId(Long id){
+        Empresa empresa = this.buscarEmpresaPorId(id);
+        return new EmpresaDTO(empresa);
+    }
     public EmpresaDTO criarEmpresa(EmpresaRequestDTO empresaRequest){
-        Empresa empresa = Empresa.builder()
+        Empresa empresa = buildEmpresa(empresaRequest);
+        return new EmpresaDTO(this.salvarEmpresa(empresa));
+    }
+    private Empresa buildEmpresa(EmpresaRequestDTO empresaRequest){
+        return Empresa.builder()
                 .email(empresaRequest.getEmail())
                 .CNPJ(empresaRequest.getCnpj())
                 .nome(empresaRequest.getNome())
                 .saldo(empresaRequest.getSaldo())
                 .build();
-        return new EmpresaDTO(this.salvarEmpresa(empresa));
     }
 
 }
