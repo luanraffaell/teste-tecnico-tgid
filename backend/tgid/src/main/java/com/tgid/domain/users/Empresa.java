@@ -21,6 +21,7 @@ public class Empresa {
     private String nome;
     private String CNPJ;
     private BigDecimal saldo;
+    private String email;
 
     public void deposito(BigDecimal quantia){
         this.saldo.add(quantia);
