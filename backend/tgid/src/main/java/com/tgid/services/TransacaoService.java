@@ -11,7 +11,6 @@ import com.tgid.services.factory.TaxaSistema;
 import com.tgid.services.factory.TaxaSistemaFactory;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,8 +26,8 @@ public class TransacaoService {
     private final TaxaSistemaFactory taxaSistemaFactory;
 
     public TransacaoDTO criarTransacao(TransacaoRequestDTO transacaoDTO, TransactionType tipoTransacao){
-        Empresa empresaAtual = empresaService.buscarEmpresaPorId(transacaoDTO.empresaId());
-        Cliente clienteAtual = clienteService.buscarClientePorId((transacaoDTO.clienteId()));
+        Empresa empresaAtual = empresaService.buscarEmpresaPorId(transacaoDTO.getEmpresaId());
+        Cliente clienteAtual = clienteService.buscarClientePorId((transacaoDTO.getClienteId()));
         TaxaSistema taxaSistema = taxaSistemaFactory.getTaxaSistema(tipoTransacao);
         Transacao.TransacaoBuilder transacao = Transacao.builder()
                 .cliente(clienteAtual)
@@ -36,7 +35,7 @@ public class TransacaoService {
                 .tipoTransacao(tipoTransacao)
                 .valorTaxa(taxaSistema.getValorTaxa())
                 .timesTamp(LocalDateTime.now());
-        BigDecimal quantia = taxaSistema.aplicarTaxa(transacaoDTO.valorTransacao());
+        BigDecimal quantia = taxaSistema.aplicarTaxa(transacaoDTO.getValorTransacao());
 
         saqueDeposito(empresaAtual,quantia,tipoTransacao);
         transacao.valorTransacao(quantia);
