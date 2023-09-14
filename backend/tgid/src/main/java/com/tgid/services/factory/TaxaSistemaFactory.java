@@ -19,7 +19,7 @@ public class TaxaSistemaFactory {
         taxas.forEach(t -> this.taxasSistema.put(t.getTransactionName().name(),t));
     }
 
-    public TaxaSistema getTaxa(TransactionType type){
+    public TaxaSistema getTaxaSistema(TransactionType type){
         return this.taxasSistema.get(type.name());
     }
 }
