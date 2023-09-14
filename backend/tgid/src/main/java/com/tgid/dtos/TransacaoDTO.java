@@ -12,6 +12,7 @@ public class TransacaoDTO {
     private Long id;
     private Long clienteId;
     private Long empresaId;
+    private BigDecimal valor;
     private BigDecimal valorTaxa;
     private TransactionType tipoTransacao;
     private LocalDateTime timesTamp;
