@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClienteController {
     private final ClienteService clienteService;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity createCliente(@RequestBody ClienteRequestDTO cliente){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.clienteService.criarCliente(cliente));
     }
