@@ -1,10 +1,7 @@
 package com.tgid.domain.users;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -12,6 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Builder
 @Entity
 @Table(name= "tb_empresa")
 public class Empresa {
@@ -24,9 +22,9 @@ public class Empresa {
     private String email;
 
     public void deposito(BigDecimal quantia){
-        this.saldo.add(quantia);
+        this.saldo = this.saldo.add(quantia);
     }
     public void saque(BigDecimal quantia){
-        this.saldo.subtract(quantia);
+       this.saldo = this.saldo.subtract(quantia);
     }
 }
