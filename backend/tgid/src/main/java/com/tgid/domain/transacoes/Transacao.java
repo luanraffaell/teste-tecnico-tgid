@@ -5,6 +5,9 @@ import com.tgid.domain.users.Empresa;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +25,9 @@ public class Transacao {
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
-    private double valorTaxa;
+    private BigDecimal valorTaxa;
 
     @Enumerated(EnumType.STRING)
     private TransactionType tipoTransacao;
+    private LocalDateTime timesTamp;
 }
