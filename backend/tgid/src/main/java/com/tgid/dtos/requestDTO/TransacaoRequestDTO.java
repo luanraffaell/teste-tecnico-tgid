@@ -1,4 +1,4 @@
-package com.tgid.dtos;
+package com.tgid.dtos.requestDTO;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
