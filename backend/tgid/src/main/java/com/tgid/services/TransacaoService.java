@@ -7,6 +7,7 @@ import com.tgid.domain.users.Empresa;
 import com.tgid.dtos.TransacaoDTO;
 import com.tgid.dtos.TransacaoRequestDTO;
 import com.tgid.repositories.TransacaoRepository;
+import com.tgid.services.factory.EmailNotificacaoService;
 import com.tgid.services.factory.TaxaSistema;
 import com.tgid.services.factory.TaxaSistemaFactory;
 import jakarta.transaction.Transactional;
@@ -24,6 +25,8 @@ public class TransacaoService {
     private final TransacaoRepository transacaoRepository;
 
     private final TaxaSistemaFactory taxaSistemaFactory;
+    private final WebhookService webhookService;
+    private final EmailNotificacaoService emailNotificacaoService;
 
     public TransacaoDTO criarTransacao(TransacaoRequestDTO transacaoDTO, TransactionType tipoTransacao){
         Empresa empresaAtual = empresaService.buscarEmpresaPorId(transacaoDTO.getEmpresaId());
@@ -39,12 +42,23 @@ public class TransacaoService {
 
         saqueDeposito(empresaAtual,quantia,tipoTransacao);
         transacao.valorTransacao(quantia);
+        boolean callbackEnviadoParaEmpresa = webhookService.enviarCallback();
+        TransacaoDTO novaTransacao = null;
+        if (callbackEnviadoParaEmpresa){
+            novaTransacao =  salvarTransacao(transacao.build());
+            empresaService.salvarEmpresa(empresaAtual);
+            clienteService.salvarCliente(clienteAtual);
+            emailNotificacaoService.enviarNotificacao(empresaAtual.getEmail(),
+                    "Sua transação foi recebida com sucesso. Id da transação:"+novaTransacao.getId());
+            emailNotificacaoService.enviarNotificacao(clienteAtual.getEmail(),
+                    "Transação realizada com sucesso. Id da transação:"+novaTransacao.getId());
+        }
 
-        empresaService.salvarEmpresa(empresaAtual);
-        clienteService.salvarCliente(clienteAtual);
 
-        return salvarTransacao(transacao.build());
+
+        return novaTransacao;
     }
+
     @Transactional
     private TransacaoDTO salvarTransacao(Transacao transacao){
         return createDTO(this.transacaoRepository.save(transacao));
