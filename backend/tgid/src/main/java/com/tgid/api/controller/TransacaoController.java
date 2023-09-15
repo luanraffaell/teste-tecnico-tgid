@@ -1,7 +1,7 @@
 package com.tgid.api.controller;
 
 import com.tgid.domain.transacoes.TransactionType;
-import com.tgid.dtos.TransacaoRequestDTO;
+import com.tgid.dtos.requestDTO.TransacaoRequestDTO;
 import com.tgid.services.TransacaoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

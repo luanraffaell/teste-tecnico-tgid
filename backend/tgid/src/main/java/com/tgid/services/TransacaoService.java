@@ -5,7 +5,7 @@ import com.tgid.domain.transacoes.TransactionType;
 import com.tgid.domain.users.Cliente;
 import com.tgid.domain.users.Empresa;
 import com.tgid.dtos.TransacaoDTO;
-import com.tgid.dtos.TransacaoRequestDTO;
+import com.tgid.dtos.requestDTO.TransacaoRequestDTO;
 import com.tgid.repositories.TransacaoRepository;
 import com.tgid.services.factory.EmailNotificacaoService;
 import com.tgid.services.factory.TaxaSistema;
