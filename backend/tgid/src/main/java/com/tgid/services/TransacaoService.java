@@ -42,7 +42,7 @@ public class TransacaoService {
 
         saqueDeposito(empresaAtual,quantia,tipoTransacao);
         transacao.valorTransacao(quantia);
-        boolean callbackEnviadoParaEmpresa = webhookService.enviarCallback();
+        boolean callbackEnviadoParaEmpresa = webhookService.enviarCallback(empresaAtual.getEmail(),clienteAtual.getEmail());
         TransacaoDTO novaTransacao = null;
         if (callbackEnviadoParaEmpresa){
             novaTransacao =  salvarTransacao(transacao.build());
@@ -53,8 +53,6 @@ public class TransacaoService {
             emailNotificacaoService.enviarNotificacao(clienteAtual.getEmail(),
                     "Transação realizada com sucesso. Id da transação:"+novaTransacao.getId());
         }
-
-
 
         return novaTransacao;
     }
